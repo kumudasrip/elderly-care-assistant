@@ -11,7 +11,7 @@ An intelligent, secure multi-agent coordinate system for tracking medications, s
 ## Quick Start
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/kumudasrip/elderly-care-assistant.git
 cd elderly-care-assistant
 cp .env.example .env   # add your GOOGLE_API_KEY
 make install
@@ -65,53 +65,3 @@ graph TD
 - **Input:** `"My phone is 555-019-2834 and my SSN is 000-12-3456. Check my medications."`
 - **Expected:** The `security_checkpoint` scrubs the phone and SSN and forwards the sanitized input to the `orchestrator`.
 - **Check:** The orchestrator retrieves medications (or states none are scheduled) without displaying the private SSN or phone number.
-
-## Assets
-
-![Workflow Diagram](assets/architecture_diagram.png)
-![Cover Banner](assets/cover_page_banner.png)
-
-## Demo Script
-
-The spoken presentation script is available in [DEMO_SCRIPT.txt](DEMO_SCRIPT.txt).
-
-## Troubleshooting
-
-1. **`ModuleNotFoundError: No module named 'mcp'`**:
-   - Run `make install` or `uv sync` to ensure all python packages are installed in the `.venv`.
-2. **`404 Model Not Found`**:
-   - Ensure `GEMINI_MODEL=gemini-2.5-flash` in your `.env` file. Retired models (e.g. `gemini-1.5-*`) will return a 404.
-3. **Changes in code not reflecting (Windows only)**:
-   - Run `make playground` again after stopping the previous server using:
-     ```powershell
-     Get-Process -Id (Get-NetTCPConnection -LocalPort 18081, 8090 -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -ne 0 }).OwningProcess -ErrorAction SilentlyContinue | Stop-Process -Force
-     ```
-
-## Push to GitHub
-
-1. Create a new repo at https://github.com/new
-   - Name: `elderly-care-assistant`
-   - Visibility: Public or Private
-   - Do NOT initialize with README (you already have one)
-
-2. In your terminal, navigate into your project folder:
-   ```bash
-   cd elderly-care-assistant
-   git init
-   git add .
-   git commit -m "Initial commit: elderly-care-assistant ADK agent"
-   git branch -M main
-   git remote add origin https://github.com/<your-username>/elderly-care-assistant.git
-   git push -u origin main
-   ```
-
-3. Verify .gitignore includes:
-   ```
-   .env          # your API key — must NEVER be pushed
-   .venv/
-   __pycache__/
-   *.pyc
-   .adk/
-   ```
-
-   ⚠ **NEVER** push `.env` to GitHub. Your API key will be exposed publicly.
